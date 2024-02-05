@@ -12,6 +12,7 @@
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.4.4",
     "@astrojs/check": "^0.4.1",
+    "@astrojs/cloudflare": "^9.0.0",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.3.2",
     "qr-code-styling": "1.6.0-rc.1",
