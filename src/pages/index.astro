@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { YouTube } from "@astro-community/astro-embed-youtube";
+const response = await fetch(`http://${Astro.url.host}/api/balance.json`);
+const wallet = "3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM";
+
+const sats = await response.json();
+---
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"></script>
+
+<Layout title="Todos ayudamos">
+  <main class="font-mono">
+    <div>
+      <h1 class="text-gradient">Hi There</h1>
+    </div>
+    <div>
+      <p>I'm a Bitcoiner and Software Engineer from Viña del Mar, Chile.</p>
+      <br />
+      <p>
+        My home town Viña del Mar and neighbouring city Quilpue was heavily hit
+        by wildfires on the weekend of the 2nd of February.
+      </p>
+      <br />
+      <p>
+        >1000 houses were destroyed and >100 people lost their life. Everyone is
+        trying to help each other in any way they can.
+      </p>
+      <br />
+      <p>I'm collecting donations for people in need using Bitcoin.</p>
+      <br />
+      <p class="font-bold text-gradient text-3xl py-8">
+        As of now, we have collected {sats.sats} Satoshis.
+      </p>
+    </div>
+    <YouTube id="6Gb-W-wJHCE" />
+    <div class="flex flex-row justify-center mt-4" id="qrcode"></div>
+
+    <div>
+      <p class="mt-4">I will publish all recipes and photos when available.</p>
+      <br />
+      <a class="underline" href="">Shitty code on github here</a>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM",
+    width: 300,
+    height: 300,
+  });
+</script>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .astro-a {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translatex(-50%);
+    width: 220px;
+    height: auto;
+    z-index: -1;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .instructions {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--accent-light), 25%);
+    background: linear-gradient(
+      rgba(var(--accent-dark), 66%),
+      rgba(var(--accent-dark), 33%)
+    );
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .instructions code {
+    font-size: 0.8em;
+    font-weight: bold;
+    background: rgba(var(--accent-light), 12%);
+    color: rgb(var(--accent-light));
+    border-radius: 4px;
+    padding: 0.3em 0.4em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent-light));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 2rem;
+    padding: 0;
+  }
+</style>
