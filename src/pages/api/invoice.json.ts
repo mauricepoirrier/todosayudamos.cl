@@ -8,15 +8,13 @@ export const POST: APIRoute = async ({ params, request }) => {
     return new Response('Content-Type must be application/json', { status: 415 });
   }
   const body = await request.json();
-
   if (!body.amount) {
     return new Response('sats is required', { status: 400 });
   }
   const sats = Number(body.amount)
-  if (sats > 0) {
+  if (sats <= 0) {
     return new Response('sats must be greater than 0', { status: 400 });
   }
-  console.log(sats);
 
   const auth = new BudaHMACAuth();
   const data = {
@@ -25,11 +23,10 @@ export const POST: APIRoute = async ({ params, request }) => {
     'memo': 'Chilean wildfires donation',
     'expiry_seconds': 60 * 60
   }
-  console.log(data);
   const response = await auth.makeRequest('POST', '/api/v2/lightning_network_invoices', data);
   return new Response(
     JSON.stringify({
-      invoice: response.lightning_network_invoice
+      invoice: response.invoice.encoded_payment_request
     }),
     { status: 201 }
   )

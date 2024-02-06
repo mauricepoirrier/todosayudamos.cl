@@ -1,82 +1,89 @@
 ---
 let invoice = "";
+
 if (Astro.request.method == "POST") {
-	const data = await Astro.request.formData();
-	const amount = data.get("amount");
+  const data = await Astro.request.formData();
+  const amount = data.get("amount");
 
-	try {
-		const response = await fetch(
-			`http://${Astro.url.host}/api/invoice.json`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ amount: amount }),
-			},
-		);
+  try {
+    const response = await fetch(`http://${Astro.url.host}/api/invoice.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: amount }),
+    });
 
-		// Display API response
-		const data = await response.json();
-		invoice = data.invoice;
-	} catch (error) {
-		console.error(error);
-	}
+    // Display API response
+    const data = await response.json();
+    invoice = data.invoice;
+  } catch (error) {
+    console.error(error);
+  }
 }
 ---
 
 <form method="POST">
-	<input
-		class="text-gray-600"
-		type="number"
-		min="0"
-		name="amount"
-		placeholder="Amount"
-	/>
-	<button type="submit">Submit</button>
+  <input
+    class="text-gray-600"
+    type="number"
+    min="0"
+    name="amount"
+    placeholder="Amount"
+  />
+  <button type="submit">Submit</button>
 </form>
 
-<div>
-	{invoice}
-</div>
+{invoice ? <div class="link-card" id="invoice"></div> : ""}
+
+<script define:vars={{ invoice }}>
+  if (invoice !== "") {
+    // @ts-ignore
+    new QRCode(document.getElementById("invoice"), {
+      text: invoice,
+      width: 300,
+      height: 300,
+    });
+  }
+</script>
 
 <style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1px;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
-	}
+  .link-card {
+    list-style: none;
+    display: flex;
+    padding: 1px;
+    background-color: #23262d;
+    background-image: none;
+    background-size: 400%;
+    border-radius: 7px;
+    background-position: 100%;
+    transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  .link-card > a {
+    width: 100%;
+    text-decoration: none;
+    line-height: 1.4;
+    padding: calc(1.5rem - 1px);
+    border-radius: 8px;
+    color: white;
+    background-color: #23262d;
+    opacity: 0.8;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  .link-card:is(:hover, :focus-within) {
+    background-position: 0;
+    background-image: var(--accent-gradient);
+  }
+  .link-card:is(:hover, :focus-within) h2 {
+    color: rgb(var(--accent-light));
+  }
 </style>
