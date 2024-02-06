@@ -1,24 +1,45 @@
 ---
-interface Props {
-	title: string;
-	body: string;
-	href: string;
-}
+let invoice = "";
+if (Astro.request.method == "POST") {
+	const data = await Astro.request.formData();
+	const amount = data.get("amount");
 
-const { href, title, body } = Astro.props;
+	try {
+		const response = await fetch(
+			`http://${Astro.url.host}/api/invoice.json`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ amount: amount }),
+			},
+		);
+
+		// Display API response
+		const data = await response.json();
+		invoice = data.invoice;
+	} catch (error) {
+		console.error(error);
+	}
+}
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
-			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
+<form method="POST">
+	<input
+		class="text-gray-600"
+		type="number"
+		min="0"
+		name="amount"
+		placeholder="Amount"
+	/>
+	<button type="submit">Submit</button>
+</form>
+
+<div>
+	{invoice}
+</div>
+
 <style>
 	.link-card {
 		list-style: none;

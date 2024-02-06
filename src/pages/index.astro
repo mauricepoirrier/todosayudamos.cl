@@ -1,5 +1,6 @@
 ---
 export const prerender = false;
+import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
 const response = await fetch(`http://${Astro.url.host}/api/balance.json`);
@@ -40,83 +41,105 @@ const sats = await response.json();
     <YouTube id="6Gb-W-wJHCE" />
     <div class="flex flex-row justify-center mt-4" id="qrcode"></div>
 
-    <div>
-      <p class="mt-4">I will publish all receipt and photos when available.</p>
+    <div class="mt-8">
+      <strong>Timeline</strong>
       <br />
-      <p>Soon Lightining. Reach me on telegram for invoice @mpoirrier</p>
-      <br />
-      <a class="underline" href="">Shitty code on github here</a>
+      <div>
+        <ul class="text-xs">
+          <li>
+            <strong>2024-02-06 9:00</strong> -> I withdraw 1744044 Sats to receive
+            $700.000 CLP.
+          </li>
+          <li>
+            <strong>2024-02-05 20:00</strong> -> Published site.
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p class="mt-4">
+          I will publish all receipt and photos when available.
+        </p>
+        <br />
+        <p>Soon Lightining. Reach me on telegram for invoice @mpoirrier</p>
+        <br />
+        <!-- <Card /> -->
+        <a
+          class="underline"
+          href="https://github.com/mauricepoirrier/todosayudamos.cl"
+          >Shitty code on github here</a
+        >
+      </div>
     </div>
   </main>
+
+  <script>
+    // @ts-ignore
+    new QRCode(document.getElementById("qrcode"), {
+      text: "3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM",
+      width: 300,
+      height: 300,
+    });
+  </script>
+
+  <style>
+    main {
+      margin: auto;
+      padding: 1rem;
+      width: 800px;
+      max-width: calc(100% - 2rem);
+      color: white;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+    .astro-a {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translatex(-50%);
+      width: 220px;
+      height: auto;
+      z-index: -1;
+    }
+    h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    .text-gradient {
+      background-image: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      background-position: 0%;
+    }
+    .instructions {
+      margin-bottom: 2rem;
+      border: 1px solid rgba(var(--accent-light), 25%);
+      background: linear-gradient(
+        rgba(var(--accent-dark), 66%),
+        rgba(var(--accent-dark), 33%)
+      );
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+    .instructions code {
+      font-size: 0.8em;
+      font-weight: bold;
+      background: rgba(var(--accent-light), 12%);
+      color: rgb(var(--accent-light));
+      border-radius: 4px;
+      padding: 0.3em 0.4em;
+    }
+    .instructions strong {
+      color: rgb(var(--accent-light));
+    }
+    .link-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+      gap: 2rem;
+      padding: 0;
+    }
+  </style>
 </Layout>
-
-<script>
-  // @ts-ignore
-  new QRCode(document.getElementById("qrcode"), {
-    text: "3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM",
-    width: 300,
-    height: 300,
-  });
-</script>
-
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
-  }
-  .astro-a {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translatex(-50%);
-    width: 220px;
-    height: auto;
-    z-index: -1;
-  }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(
-      rgba(var(--accent-dark), 66%),
-      rgba(var(--accent-dark), 33%)
-    );
-    padding: 1.5rem;
-    border-radius: 8px;
-  }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
-  }
-  .instructions strong {
-    color: rgb(var(--accent-light));
-  }
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
-  }
-</style>
