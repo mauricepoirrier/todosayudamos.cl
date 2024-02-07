@@ -1,4 +1,5 @@
 import { createHmac } from "node:crypto";
+import { Buffer } from 'node:buffer';
 
 // Yeah i'm using an exchange so it is cheaper to exchange for CLP
 export class BudaHMACAuth {
