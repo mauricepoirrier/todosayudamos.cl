@@ -50,7 +50,10 @@ const sats = await response.json();
       </p>
     </div>
     <YouTube id="6Gb-W-wJHCE" />
-    <div class="flex flex-row justify-center mt-4" id="qrcode"></div>
+    <div class="flex flex-col items-center justify-center my-8">
+      <div id="qrcode"></div>
+      <p onclick="">Click qr to copy it!</p>
+    </div>
 
     <div class="mt-8">
       <strong>Timeline</strong>
@@ -112,10 +115,16 @@ const sats = await response.json();
 
   <script>
     // @ts-ignore
-    new QRCode(document.getElementById("qrcode"), {
+    var div = document.getElementById("qrcode");
+    // @ts-ignore
+    new QRCode(div, {
       text: "3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM",
       width: 300,
       height: 300,
+    });
+    // @ts-ignore
+    div.addEventListener("click", function (_) {
+      navigator.clipboard.writeText("3CwoZXUEL88yLiZ7gUzirFapsmtNGqDSZM");
     });
   </script>
 
