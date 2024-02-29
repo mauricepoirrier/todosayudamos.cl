@@ -3,9 +3,6 @@ export const prerender = false;
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
-const response = await fetch(`http://${Astro.url.host}/api/balance.json`);
-
-const sats = await response.json();
 ---
 
 <script
@@ -46,7 +43,7 @@ const sats = await response.json();
       </p>
       <br />
       <p class="font-bold text-gradient text-3xl py-8">
-        As of now, we have collected {sats.sats} Satoshis.
+        we collected 2946604 Satoshis.
       </p>
     </div>
     <YouTube id="6Gb-W-wJHCE" />
@@ -55,6 +52,10 @@ const sats = await response.json();
       <p>Click qr to copy it!</p>
     </div>
 
+    <p>
+      Thank you for everything. I've closed the collection. Every satoshi in
+      this campaign was donated directly to families in need.
+    </p>
     <div class="mt-8">
       <strong>Timeline</strong>
       <br />
@@ -173,10 +174,6 @@ const sats = await response.json();
           I will publish all receipt and photos when available.
         </p>
         <br />
-        <p>Soon Lightining. Reach me on telegram for invoice @mpoirrier</p>
-        <br />
-        <p>MVP Lightning (is working)</p>
-        <Card />
         <a
           class="underline"
           href="https://github.com/mauricepoirrier/todosayudamos.cl"
